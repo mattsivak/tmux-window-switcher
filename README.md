@@ -4,7 +4,7 @@
 
 > ![tmux-window-switcher](./window-switcher.jpg)
 
-> [!INFO]
+> [!TIP]
 > This uses a Tmux popup to display the current Tmux windows. It spawns a
 > new shell to render them, so the display speed may vary depending on your
 > shell's startup time.
