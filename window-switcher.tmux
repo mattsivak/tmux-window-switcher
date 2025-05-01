@@ -27,5 +27,5 @@ height=$(get_tmux_option "${height_option}" "${height_option_default}")
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 tmux bind-key "${key_binding}" \
-  popup -w "${width}" -h "${height}" \
+  popup -w "${width}" -h "${height}" -E \
   "${script_dir}/window-switcher.sh 2> /tmp/tmux-window-switcher.log"
