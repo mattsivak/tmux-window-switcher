@@ -15,7 +15,7 @@ switch_to_window() {
   local window_name="${2}"
   local window_index="${3}"
 
-  "${history_tracker}" save "${session_name}" "${window_name}"
+  "${history_tracker}" save "${session_name}" "${window_name}" "${window_index}"
 
   tmux switch-client -t "${session_name}:${window_index}"
 }
