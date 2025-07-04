@@ -25,7 +25,10 @@ if [[ "${1}" == "switch" ]]; then
   return
 fi
 
-cmd="${history_tracker} list | column -t -s ','"
+current_session="$(tmux display-message -p '#S')"
+current_window="$(tmux display-message -p '#W')"
+
+cmd="${history_tracker} list | grep -v '^${current_session},${current_window},' | column -t -s ','"
 eval "${cmd}" \
   | fzf --no-reverse \
     --header-lines 1 \
