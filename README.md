@@ -5,13 +5,13 @@
 > ![tmux-window-switcher](./window-switcher.jpg)
 
 > [!TIP]
-> This uses a Tmux popup to display the current Tmux windows. It spawns a
-> new shell to render them, so the display speed may vary depending on your
-> shell's startup time.
+> This plugin uses a Tmux popup to show your windows, ordered by most recent
+> access. It launches a new shell to render the list, so display speed depends
+> on your shell's startup time.
 >
-> In other words, if performance is a priority, consider optimizing your shell
-> configuration (a highly recommended step) or simply stick to the default Tmux
-> window switcher (`<prefix>w`), which is instant.
+> If you want the fastest possible experience, consider optimizing your shell
+> configuration (which is highly recommended), or use the default Tmux window
+> switcher (`<prefix>w`), which is instant.
 
 ## :package: Installation
 ### Install through [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)
@@ -36,6 +36,7 @@ Default configuration:
 set -g @tmux-window-switcher-key-binding 'C-g'
 set -g @tmux-window-switcher-width '90%'
 set -g @tmux-window-switcher-height '90%'
+set -g @tmux-window-switcher-order-strategy 'history'
 ```
 
 ## :page_with_curl: License
