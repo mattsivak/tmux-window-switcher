@@ -36,16 +36,26 @@ get() {
 }
 
 get_sorted_windows() {
-  local temp_file=$(mktemp)
-
-  tmux list-windows -a -F '#{session_name},#{window_name},#{window_index}' | while IFS=',' read -r session_name window_name window_index; do
-    local timestamp=$(get "${session_name}" "${window_name}" "${window_index}")
-    echo "${session_name}${sep}${window_name}${sep}${window_index}${sep}${timestamp}"
-  done | sort -rn -t"${sep}" -k4 > "${temp_file}"
-
+  # Create a single awk command that:
+  # 1. Reads the history file into memory
+  # 2. Processes tmux windows and joins with history data
+  # 3. Sorts by timestamp
   echo "Session name${sep}Window name${sep}Window index${sep}Timestamp"
-  cat "${temp_file}"
-  rm "${temp_file}"
+
+  awk -F"${sep}" '
+    # First, read the history file
+    NR==FNR {
+      history[$1 FS $2 FS $3] = $4
+      next
+    }
+    # Then process tmux output
+    {
+      key = $1 FS $2 FS $3
+      timestamp = (key in history) ? history[key] : 0
+      print key FS timestamp
+    }
+  ' "${datastore_file}" <(tmux list-windows -a -F '#{session_name},#{window_name},#{window_index}') | \
+  sort -rn -t"${sep}" -k4
 }
 
 case "$1" in
