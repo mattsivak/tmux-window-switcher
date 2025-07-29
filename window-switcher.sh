@@ -12,7 +12,7 @@ current_info="$(tmux display-message -p '#S,#W')"
 current_session="${current_info%,*}"
 current_window="${current_info#*,}"
 
-cmd='echo -e "Session name,Window name,Window index\n$(tmux list-windows -a -F '"'"'#{session_name},#{window_name},#{window_index}'"'"')" | grep -v "^'"${current_session}"','"${current_window}"'," | column -t -s ","'
+cmd='echo -e "Session name,Window name,Window index,Current path\n$(tmux list-windows -a -F '"'"'#{session_name},#{window_name},#{window_index},#{pane_current_path}'"'"')" | grep -v "^'"${current_session}"','"${current_window}"'," | column -t -s ","'
 eval "${cmd}" \
   | fzf --no-reverse \
     --header-lines 1 \
